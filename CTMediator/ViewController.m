@@ -89,6 +89,12 @@ NSString * const kCellIdentifier = @"kCellIdentifier";
     if (indexPath.row == 6) {
         [[CTMediator sharedInstance] performTarget:@"InvalidTarget" action:@"InvalidAction" params:nil shouldCacheTarget:NO];
     }
+    
+    if (indexPath.row == 7) {
+        [[CTMediator sharedInstance] performActionWithUrl:[NSURL URLWithString:@"aaa://A/showAlertWithCompletion"] completion:^(NSDictionary *info) {
+            NSLog(@"%@",info);
+        }];
+    }
 }
 
 #pragma mark - getters and setters
@@ -113,7 +119,8 @@ NSString * const kCellIdentifier = @"kCellIdentifier";
                         @"present image when error",
                         @"show alert",
                         @"table view cell",
-                        @"No Target-Action response"
+                        @"No Target-Action response",
+                        @"url with completion"
                         ];
     }
     return _dataSource;

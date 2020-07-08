@@ -92,4 +92,26 @@ typedef void (^CTUrlRouterCallbackBlock)(NSDictionary *info);
     return nil;
 }
 
+- (id)Action_showAlertWithCompletion:(NSDictionary *)params{
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        CTUrlRouterCallbackBlock callback = params[@"completion"];
+        if (callback) {
+            callback(@{@"alertAction":action});
+        }
+    }];
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        CTUrlRouterCallbackBlock callback = params[@"completion"];
+        if (callback) {
+            callback(@{@"alertAction":action});
+        }
+    }];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"alert from Module A" message:params[@"message"] preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:cancelAction];
+    [alertController addAction:confirmAction];
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+    return nil;
+}
+
 @end
